@@ -760,28 +760,16 @@ FFBFBFFRRR
 BFFBBBBRLL
 """
 
-let lines = input.components(separatedBy: .newlines)
-
-func toNum(_ input: Substring, trigger: Character) -> Int {
-    input
-        .map { $0 == trigger ? 1 : 0 }
-        .reduce(0) { accu, new in accu * 2 + (new == 1 ? 1 : 0) }
-}
-
-func rowAndChair(for line: String) -> (Int, Int) {
-    (
-        toNum(line.prefix(7), trigger: "B"),
-        toNum(line.suffix(3), trigger: "R")
-    )
-}
-
-func id(for rowAndChair: (Int, Int)) -> Int {
-    return rowAndChair.0 * 8 + rowAndChair.1
-}
-
-let allIds = lines
-    .map { rowAndChair(for: $0) }
-    .map { id(for: $0) }
+let allIds = input
+    .components(separatedBy: .newlines)
+    .map {
+        $0
+            .replacingOccurrences(of: "L", with: "0")
+            .replacingOccurrences(of: "R", with: "1")
+            .replacingOccurrences(of: "F", with: "0")
+            .replacingOccurrences(of: "B", with: "1")
+    }
+    .compactMap { Int($0, radix: 2) }
 
 let highest = allIds
     .reduce(0) { $1 > $0 ? $1 : $0 }
