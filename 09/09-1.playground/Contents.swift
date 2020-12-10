@@ -1033,7 +1033,7 @@ let numbers = input
     .compactMap { Int($0) }
 
 for index in 0..<numbers.count - preamble {
-    let part = numbers[index...(index + preamble - 1)]
+    let part = numbers[index..<(index + preamble)]
     let sum = numbers[index + preamble]
     
     var found = false
@@ -1055,4 +1055,4 @@ for index in 0..<numbers.count - preamble {
     }
 }
 
-
+// 1398413738
