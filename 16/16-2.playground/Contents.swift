@@ -375,15 +375,14 @@ while !fieldsToDetermine.isEmpty {
     for fieldIndex in fieldsToDetermine {
         let values = validTickets.map { $0[fieldIndex] }
         
-        var matches: [Field] = []
-        
-        for field in fieldsToUse {
-            let all = values.allSatisfy { field.has($0) }
-            if all { matches.append(field) }
-        }
+        let matches = fieldsToUse
+            .filter { field in
+                values
+                    .allSatisfy { field.has($0) }
+            }
         
         if matches.count == 1 {
-            exactMatches.append((fieldIndex, matches[0]))
+            exactMatches.append((fieldIndex, matches.first!))
             break
         }
     }
