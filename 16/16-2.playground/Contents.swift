@@ -369,11 +369,15 @@ var fieldsToUse = Set(fields)
 
 var foundMatches: [(Int, Field)] = []
 
+let valueCache = (0..<validTickets[0].count).map { index in
+    validTickets.map { $0[index] }
+}
+
 while !fieldsToDetermine.isEmpty {
     var exactMatches: [(Int, Field)] = []
-    
+            
     for fieldIndex in fieldsToDetermine {
-        let values = validTickets.map { $0[fieldIndex] }
+        let values = valueCache[fieldIndex]
         
         let matches = fieldsToUse
             .filter { field in
